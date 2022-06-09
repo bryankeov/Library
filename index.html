@@ -5,22 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./script.js"></script>
-    <link ref="stylesheet" href="./style.css"></link>
+    <link rel="stylesheet" href="./style.css"></link>
     <title>Library</title>
 </head>
 <body>
-    <div class="input-container">
-        <form id="bookForm">
-            <h2>Add new book.</h2>
-            <p>Enter the book details below then click "Submit".</p>
-            <input type="text" class="title" placeholder="Title"><br>
-            <input type="text" class="author" placeholder="Author"><br>
-            <input type="text" class="pages" placeholder="Number of Pages"><br>
-            <label>Have you read it?</label>
-            <input type="checkbox" class="read"><br><br>
-            <button class="submit" type="submit" onclick="addBookToLibrary()">Submit</button>
-            <button class="reset" onclick="resetForm()">Reset</button>
-        </form>
+    <h1>My Library</h1>
+    <button type="button" class="open-modal" data-open="modal1">Add Book</button>
+   
+    <div class="modal" id="modal1">
+        <div class="modal-dialog">
+            <header class="modal-header">
+                <h3>Add a new book.</h3>
+                <button class="close-modal" data-close>X</button>
+            </header>
+            <section class="modal-content">
+                <form id="bookForm">
+                    <p>Enter the book details below then click "Submit".</p>
+                    <input type="text" class="title" placeholder="Title"><br>
+                    <input type="text" class="author" placeholder="Author"><br>
+                    <input type="text" class="pages" placeholder="Number of Pages"><br>
+                    <label>Have you read it?</label>
+                    <input type="checkbox" class="read"><br><br>
+                    <button class="submit" type="submit">Submit</button>
+                    <button class="reset">Reset</button>
+                </form>
+            </section>
+            <footer class="modal-footer"></footer>
+        </div>
     </div>
 </body>
 </html>
