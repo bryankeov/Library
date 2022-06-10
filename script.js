@@ -1,6 +1,9 @@
+const submitButton = document.getElementsByClassName('submitButton')
+
 let myLibrary = [];
 
-function book(title, author, pages, read) {  //Book constructor
+//Book constructor
+function book(title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
@@ -13,49 +16,75 @@ function book(title, author, pages, read) {  //Book constructor
         }
     }
 }
-// Modal
-const openEls = document.querySelectorAll('[data-open]');
-const isVisible = 'is-visible';
 
-for(const el of openEls) {
-    el.addEventListener('click', function() {
-        const modalId = this.dataset.open;
-        document.getElementById(modalId).classList.add(isVisible);
-    });
-}
-
-const closeEls = document.querySelectorAll('[data-close]');
-
-for (const el of closeEls) {
-    el.addEventListener('click', function() {
-        this.parentElement.classList.remove(isVisible);
-    });
-}
-
-document.addEventListener('click', e => {
-    if(e.target == document.querySelector(".modal.is-visible")) {
-        document.querySelector('modal.is-visible').classList.remove(isVisible);
-    }
-});
-
-function addBookToLibrary() {  //Input new book
-    myLibrary.push(new book(title, author, pages, read));  //Add to array
+//Add new book to library array
+function addBookToLibrary() {
+    return myLibrary.push(new book(title, author, pages, read));
 }
 
 function submitForm() {
-    let title = document.getElementsByClassName('title').value;  //Take input
-    let author = document.getElementsByClassName('author');
-    let pages = document.getElementsByClassName('pages');
-    let read = document.getElementsByClassName('read');
-    addBookToLibrary(title, author, pages, read);
+    const title = document.getElementsByClassName('title').value;
+    const author = document.getElementsByClassName('author').value;
+    const pages = document.getElementsByClassName('pages').value;
+    const read = document.getElementsByClassName('read').checked;
+
+    submitButton.addEventListener('click', event => {
+         return addBookToLibrary(title, author, pages, read);
+    });
 }
 
-function resetForm() {
-    const resetButton = document.getElementsByClassName('reset')
-    resetButton.addEventListener('click', event => {
-        document.getElementById('bookForm').reset()
-    })
+//Modal
+const modal = document.getElementById("modal1");
+const addBookButton = document.getElementById("addBookButton");
+const closeButton = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+addBookButton.onclick = function() {
+  modal.style.display = "block";
 }
+
+// When the user clicks on <span> (x), close the modal
+closeButton.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+// const openEls = document.querySelectorAll('[data-open]');
+// const isVisible = 'is-visible';
+
+// for(const el of openEls) {
+//     el.addEventListener('click', function() {
+//         const modalId = this.dataset.open;
+//         document.getElementById(modalId).classList.add(isVisible);
+//     });
+// }
+
+// const closeEls = document.querySelectorAll('[data-close]');
+
+// for (const el of closeEls) {
+//     el.addEventListener('click', function() {
+//         this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+//     });
+// }
+
+// document.addEventListener('click', e => {
+//     if(e.target == document.querySelector(".modal.is-visible")) {
+//         document.querySelector('.modal.is-visible').classList.remove(isVisible);
+//     }
+// });
+
+
+
+
+
+
 
 const theHobbit = new book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'true')
 myLibrary.push(theHobbit)
