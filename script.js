@@ -1,6 +1,31 @@
-const submitButton = document.getElementsByClassName('submitButton')
+let myLibrary = [
+    {
+        title: 'The Hobbit',
+        author: 'J.R.R Tolkien',
+        pages: '295 pages',
+        read: 'true'
+    },
+    {
+        title: 'Where the Crawdads Sing',
+        author: 'Delia Owens',
+        pages: '384 pages',
+        read: 'false'
+    },
+    {
+        title: 'The Song of Achilles',
+        author: 'Madeline Miller',
+        pages: '368 pages',
+        read: 'false'
+    },
+    {
+        title: 'The Happiest Man on Earth',
+        author: 'Eddie Jaku',
+        pages: '300 pages',
+        read: 'true'
+    },
+];
 
-let myLibrary = [];
+
 
 //Book constructor
 function book(title, author, pages, read) {
@@ -18,20 +43,25 @@ function book(title, author, pages, read) {
 }
 
 //Add new book to library array
-function addBookToLibrary() {
+function addBookToLibrary(title, author, pages, read) {
     return myLibrary.push(new book(title, author, pages, read));
 }
 
 function submitForm() {
-    const title = document.getElementsByClassName('title').value;
-    const author = document.getElementsByClassName('author').value;
-    const pages = document.getElementsByClassName('pages').value;
-    const read = document.getElementsByClassName('read').checked;
+    const submitButton = document.getElementsByClassName('submitButton');
 
     submitButton.addEventListener('click', event => {
-         return addBookToLibrary(title, author, pages, read);
+        const title = document.getElementsByClassName('title').value;
+        const author = document.getElementsByClassName('author').value;
+        const pages = document.getElementsByClassName('pages').value;
+        const read = document.getElementsByClassName('read').checked;
+        
+        event.preventDefault();
+        modal.style.display = "none";
+        return console.log(addBookToLibrary(title, author, pages, read));
     });
 }
+
 
 //Modal
 const modal = document.getElementById("modal1");
@@ -55,37 +85,47 @@ window.onclick = function(event) {
   }
 }
 
+//Book display
+function bookDisplay() {
+    for(let i = 0; i < myLibrary.length; i++) {
+        const cardContainer = document.getElementsByClassName('cardContainer')[0];
+        const card = document.createElement('div');
+        card.classList.add('card');
+        cardContainer.appendChild(card);
 
-// const openEls = document.querySelectorAll('[data-open]');
-// const isVisible = 'is-visible';
+            const title = document.createElement('h3');
+            title.textContent = myLibrary[i].title;
+            card.appendChild(title);
 
-// for(const el of openEls) {
-//     el.addEventListener('click', function() {
-//         const modalId = this.dataset.open;
-//         document.getElementById(modalId).classList.add(isVisible);
-//     });
-// }
+            const author = document.createElement('p');
+            author.textContent = "Author: " + myLibrary[i].author;
+            card.appendChild(author);
 
-// const closeEls = document.querySelectorAll('[data-close]');
+            const pages = document.createElement('p');
+            pages.textContent = "Pages: " + myLibrary[i].pages;
+            card.appendChild(pages);
+            
+            const read = document.createElement('p');
+                if(myLibrary[i].read === 'true') {
+                    read.textContent = "Read Status: Read";
+                } else {
+                    read.textContent = "Read Status: Not Read";
+                }
+            card.appendChild(read);
 
-// for (const el of closeEls) {
-//     el.addEventListener('click', function() {
-//         this.parentElement.parentElement.parentElement.classList.remove(isVisible);
-//     });
-// }
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('buttonContainer');
+            card.appendChild(buttonContainer);
+                const readButton = document.createElement('button');
+                readButton.classList.add('readButton');
+                readButton.textContent = 'Read';
+                buttonContainer.appendChild(readButton);
 
-// document.addEventListener('click', e => {
-//     if(e.target == document.querySelector(".modal.is-visible")) {
-//         document.querySelector('.modal.is-visible').classList.remove(isVisible);
-//     }
-// });
-
-
-
-
-
-
-
-const theHobbit = new book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'true')
-myLibrary.push(theHobbit)
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('deleteButton');
+                deleteButton.textContent = 'Delete';
+                buttonContainer.appendChild(deleteButton);
+    }
+}
+bookDisplay()
 console.log(myLibrary);
