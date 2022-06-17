@@ -61,7 +61,7 @@ input {
     margin: 2px;
 }
 
-.read {
+#formRead {
     width: 16px;
     height: 16px;
 }
@@ -114,4 +114,9 @@ input {
 .readButton, .deleteButton {
     width: 80px;
     margin: 5px;
+}
+
+button:hover,
+button.focus {
+    background-color: lightsteelblue;
 }

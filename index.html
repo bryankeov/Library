@@ -11,19 +11,19 @@
 <body>
     <div class="header">
         <h1>My Library</h1>
-        <button id="addBookButton">Add new book</button>
+        <button id="addBookButton">+ New Book</button>
     </div>
     <div id="modal1" class="modal">
         <div class="modal-content">
             <div class="close">&times;</div>
             <h2>Add a new book</h2>
-            <form id="bookForm">
-                <input type="text" class="title" placeholder="Title"><br>
-                <input type="text" class="author" placeholder="Author"><br>
-                <input type="text" class="pages" placeholder="Number of Pages"><br>
+            <form id="bookForm" name="bookForm">
+                <input type="text" id="formTitle" placeholder="Title"><br>
+                <input type="text" id="formAuthor" placeholder="Author"><br>
+                <input type="text" id="formPages" placeholder="Number of Pages"><br>
                 <label>Have you read it?</label>
-                <input type="checkbox" class="read"><br><br>
-                <button class="submitButton" type="submit">Submit</button>
+                <input type="checkbox" id="formRead"><br><br>
+                <button class="submitButton" onclick="submitForm()" type="submit">Submit</button>
             </form>
         </div>
     </div>

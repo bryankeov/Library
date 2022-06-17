@@ -1,65 +1,68 @@
 let myLibrary = [
-    {
-        title: 'The Hobbit',
-        author: 'J.R.R Tolkien',
-        pages: '295 pages',
-        read: 'true'
-    },
-    {
-        title: 'Where the Crawdads Sing',
-        author: 'Delia Owens',
-        pages: '384 pages',
-        read: 'false'
-    },
-    {
-        title: 'The Song of Achilles',
-        author: 'Madeline Miller',
-        pages: '368 pages',
-        read: 'false'
-    },
-    {
-        title: 'The Happiest Man on Earth',
-        author: 'Eddie Jaku',
-        pages: '300 pages',
-        read: 'true'
-    },
+  {
+    title: 'The Hobbit',
+    author: 'J.R.R Tolkien',
+    pages: '295 pages',
+    read: true
+  },
+  {
+    title: 'Where the Crawdads Sing',
+    author: 'Delia Owens',
+    pages: '384 pages',
+    read: false
+  },
+  {
+    title: 'The Song of Achilles',
+    author: 'Madeline Miller',
+    pages: '368 pages',
+    read: false
+  },
+  {
+    title: 'The Happiest Man on Earth',
+    author: 'Eddie Jaku',
+    pages: '300 pages',
+    read: true
+  },
 ];
 
+const bookForm = document.getElementById('bookForm');
+const cardContainer = document.getElementsByClassName('cardContainer')[0]
 
 
 //Book constructor
 function book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.info = function() {
-        if(read === true) {
-            return `${title} by ${author}, ${pages}, has read this book`;
-        } else {
-            return `${title} by ${author}, ${pages}, has not read this book yet`;
-        }
-    }
+  this.title = title
+  this.author = author
+  this.pages = pages
+  this.read = read
+  this.info = function() {
+    if(read === true) {
+      return `${title} by ${author}, ${pages}, has read this book`;
+    } else {
+      return `${title} by ${author}, ${pages}, has not read this book yet`;
+    };
+  };
 }
 
 //Add new book to library array
 function addBookToLibrary(title, author, pages, read) {
-    return myLibrary.push(new book(title, author, pages, read));
+  myLibrary.push(new book(title, author, pages, read));
+  bookForm.reset();
+  cardContainer.innerHTML = ""; //clear display to prevent duplication
+  bookDisplay();
 }
 
 function submitForm() {
-    const submitButton = document.getElementsByClassName('submitButton');
-
-    submitButton.addEventListener('click', event => {
-        const title = document.getElementsByClassName('title').value;
-        const author = document.getElementsByClassName('author').value;
-        const pages = document.getElementsByClassName('pages').value;
-        const read = document.getElementsByClassName('read').checked;
+  bookForm.addEventListener('submit', (event) => {
+    const title = document.getElementById('formTitle').value;
+    const author = document.getElementById('formAuthor').value;
+    const pages = document.getElementById('formPages').value;
+    const read = document.getElementById('formRead').checked;  
         
-        event.preventDefault();
-        modal.style.display = "none";
-        return console.log(addBookToLibrary(title, author, pages, read));
-    });
+    modal.style.display = "none";  //close modal
+    event.preventDefault();  //block default form submit function
+    addBookToLibrary(title, author, pages, read);
+  });
 }
 
 
@@ -87,45 +90,75 @@ window.onclick = function(event) {
 
 //Book display
 function bookDisplay() {
-    for(let i = 0; i < myLibrary.length; i++) {
-        const cardContainer = document.getElementsByClassName('cardContainer')[0];
-        const card = document.createElement('div');
-        card.classList.add('card');
-        cardContainer.appendChild(card);
+  for(let i = 0; i < myLibrary.length; i++) {
+    if(myLibrary[i].title !== '') { //prevent dupe bug
+      const card = document.createElement('div');
+      card.classList.add('card');
+      cardContainer.appendChild(card);
 
-            const title = document.createElement('h3');
-            title.textContent = myLibrary[i].title;
-            card.appendChild(title);
+      const title = document.createElement('h3');
+      title.textContent = myLibrary[i].title;
+      title.classList.add('cardTitle');
+      card.appendChild(title);
 
-            const author = document.createElement('p');
-            author.textContent = "Author: " + myLibrary[i].author;
-            card.appendChild(author);
+      const author = document.createElement('p');
+      author.textContent = "Author: " + myLibrary[i].author;
+      card.appendChild(author);
 
-            const pages = document.createElement('p');
-            pages.textContent = "Pages: " + myLibrary[i].pages;
-            card.appendChild(pages);
-            
-            const read = document.createElement('p');
-                if(myLibrary[i].read === 'true') {
-                    read.textContent = "Read Status: Read";
-                } else {
-                    read.textContent = "Read Status: Not Read";
-                }
-            card.appendChild(read);
+      const pages = document.createElement('p');
+      pages.textContent = "Pages: " + myLibrary[i].pages;
+      card.appendChild(pages);
+                
+      const read = document.createElement('p');
+      read.classList.add('cardRead');
+      if(myLibrary[i].read === true) {
+        read.textContent = "Read Status: Read";
+      } else {
+        read.textContent = "Read Status: Not Read";
+      }
+      card.appendChild(read);
 
-            const buttonContainer = document.createElement('div');
-            buttonContainer.classList.add('buttonContainer');
-            card.appendChild(buttonContainer);
-                const readButton = document.createElement('button');
-                readButton.classList.add('readButton');
-                readButton.textContent = 'Read';
-                buttonContainer.appendChild(readButton);
+      const buttonContainer = document.createElement('div');
+      buttonContainer.classList.add('buttonContainer');
+      card.appendChild(buttonContainer);
+      const readButton = document.createElement('button');
+      readButton.classList.add('readButton');
+      readButton.addEventListener('click', editBook);
+      readButton.textContent = 'Read';
+      buttonContainer.appendChild(readButton);
 
-                const deleteButton = document.createElement('button');
-                deleteButton.classList.add('deleteButton');
-                deleteButton.textContent = 'Delete';
-                buttonContainer.appendChild(deleteButton);
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('deleteButton');
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', deleteBook);
+      buttonContainer.appendChild(deleteButton);
+    }
+  }
+}
+
+function editBook() {
+  let readStatus = event.target.parentNode.parentNode.getElementsByClassName('cardRead')[0].innerHTML;
+  let parentTitle = event.target.parentNode.parentNode.getElementsByClassName('cardTitle')[0].innerHTML;
+    for( let i = 0; i < myLibrary.length; i++) {
+      if(myLibrary[i].title == parentTitle) {
+        if(myLibrary[i].read === false) {
+        myLibrary[i].read = true;
+        readStatus = "Read Status: Read";
+      } else {
+        alert('You have already read this book.')
+      }
+    }
+  }
+  cardContainer.innerHTML = ''
+  bookDisplay()
+}
+
+function deleteBook() {
+    let parentTitle = event.target.parentNode.parentNode.getElementsByClassName('cardTitle')[0].innerHTML;
+    for( let i = 0; i < myLibrary.length; i++)
+      if(myLibrary[i].title == parentTitle) {
+        myLibrary.splice(i, 1);
+        event.target.parentNode.parentNode.remove()
     }
 }
-bookDisplay()
-console.log(myLibrary);
+bookDisplay();
