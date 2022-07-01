@@ -30,23 +30,25 @@ const cardContainer = document.getElementsByClassName('cardContainer')[0]
 
 
 //Book constructor
-function book(title, author, pages, read) {
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
-  this.info = function() {
-    if(read === true) {
-      return `${title} by ${author}, ${pages}, has read this book`;
-    } else {
-      return `${title} by ${author}, ${pages}, has not read this book yet`;
+class bookClass {
+  constructor(title, author, pages, read) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.read = read
+  }
+    bookInfo() {
+        if(read === true) {
+          return `${title} by ${author}, ${pages}, has read this book`;
+        } else {
+          return `${title} by ${author}, ${pages}, has not read this book yet`;
+        };
     };
-  };
 }
 
 //Add new book to library array
 function addBookToLibrary(title, author, pages, read) {
-  myLibrary.push(new book(title, author, pages, read));
+  myLibrary.push(new bookClass(title, author, pages, read));
   bookForm.reset();
   cardContainer.innerHTML = ""; //clear display to prevent duplication
   bookDisplay();
