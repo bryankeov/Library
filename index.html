@@ -18,9 +18,9 @@
             <div class="close">&times;</div>
             <h2>Add a new book</h2>
             <form id="bookForm" name="bookForm">
-                <input type="text" id="formTitle" placeholder="Title"><br>
-                <input type="text" id="formAuthor" placeholder="Author"><br>
-                <input type="text" id="formPages" placeholder="Number of Pages"><br>
+                <input type="text" id="formTitle" placeholder="Title" required pattern="[A-Za-z]+"><br>
+                <input type="text" id="formAuthor" placeholder="Author" required pattern="[A-Za-z]+"><br>
+                <input type="text" id="formPages" placeholder="Number of Pages" required pattern="[0-9]+"><br>
                 <label>Have you read it?</label>
                 <input type="checkbox" id="formRead"><br><br>
                 <button class="submitButton" onclick="submitForm()" type="submit">Submit</button>

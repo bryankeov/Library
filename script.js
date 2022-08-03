@@ -52,6 +52,7 @@ function addBookToLibrary(title, author, pages, read) {
   bookForm.reset();
   cardContainer.innerHTML = ""; //clear display to prevent duplication
   bookDisplay();
+  console.log(myLibrary)
 }
 
 function submitForm() {
@@ -67,6 +68,18 @@ function submitForm() {
   });
 }
 
+const formValidation = document.querySelector('input');
+
+formValidation.addEventListener('input', () => {
+  formValidation.setCustomValidity('');
+  formValidation.checkValidity();
+});
+
+formValidation.addEventListener('invalid', () => {
+  if(formValidation.value === '') {
+    formValidation.setCustomValidity('Enter your details!');
+  };
+})
 
 //Modal
 const modal = document.getElementById("modal1");
